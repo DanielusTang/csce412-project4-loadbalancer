@@ -1,0 +1,7 @@
+# build output (Part 2)
+*.o
+loadbalancer
+lb_log.txt
+docs/html/
+# OS
+.DS_Store

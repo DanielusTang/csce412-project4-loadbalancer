@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AggieForge Traffic Cloud — Load Balancer Design Document</title>
+  <meta name="description" content="CSCE 412 Project 4 pre-deliverable: UML class diagram, simulation workflow diagram and design description for the AggieForge Traffic Cloud load-balancer simulation.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="brand">
+  <div class="inner">
+    <img src="logo.svg" alt="AggieForge Traffic Cloud logo" class="logo">
+    <div>
+      <h1>Load Balancer Design Document</h1>
+      <p class="tagline">Everything you need to stay balanced — every request, the right server.</p>
+    </div>
+    <div class="meta">
+      <strong>AGF-DOC-005</strong> · Pre-deliverable (design)<br>
+      CSCE 412 Cloud Computing · Project 4<br>
+      Daniel Tang · Texas A&amp;M University · October 18, 2026
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="inner">
+    <a href="#overview">1. Overview</a>
+    <a href="#data">2. Data structures</a>
+    <a href="#uml">3. Class diagram</a>
+    <a href="#classes">4. Classes &amp; interfaces</a>
+    <a href="#workflow">5. Workflow</a>
+    <a href="#choices">6. Design choices</a>
+    <a href="#config">7. Configuration &amp; log</a>
+    <a href="#experiments">8. Planned experiments</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============================================================ -->
+<section id="overview">
+  <h2>1. Overview</h2>
+  <p>
+    <strong>AggieForge Traffic Cloud</strong> is a C++ simulation of the load balancer that sits in front of a
+    large company's web-server farm. Requests arrive from random source IP addresses, each one needing a random
+    number of clock cycles of work, and the load balancer's job is to hand every request to a free web server as
+    quickly as possible while keeping just enough servers switched on. The simulation is driven by a single integer
+    clock: every tick the balancer admits any new arrivals, lets each web server make one cycle of progress,
+    dispatches queued requests to servers that have gone idle, and then decides whether to grow or shrink the pool.
+  </p>
+  <p>
+    The system is <em>balanced</em> when the number of waiting requests stays between
+    <strong>50&nbsp;×&nbsp;N</strong> and <strong>80&nbsp;×&nbsp;N</strong>, where N is the number of active web
+    servers. Below the lower bound the farm is paying for idle capacity, so one server is removed; above the upper
+    bound requests are waiting too long, so one server is added. After either change the balancer rests for
+    <strong>n</strong> cycles before re-checking, which stops it from thrashing. Everything that defines a run
+    (thresholds, task-time range, arrival rate, rest period, blocked IP ranges, logging mode) comes from a
+    configuration file so that experiments never require a recompile.
+  </p>
+  <div class="callout">
+    <strong>Scope of this document.</strong> Per the project rules, the workflow and every class interface
+    (inputs and outputs) below were designed <em>before</em> any code was written. Part 2 of the project builds
+    exactly this design; the same AggieForge branding will appear on the Doxygen site, the log header and the demo video.
+  </div>
+  <h3>What the simulation must do</h3>
+  <ul>
+    <li>Take the <strong>number of web servers</strong> and the <strong>run time in clock cycles</strong> from the user; start with a full queue of <code>servers&nbsp;×&nbsp;100</code> requests.</li>
+    <li>Generate requests with a random requester IP, destination IP, processing time and job type (<code>'P'</code> processing or <code>'S'</code> streaming), and keep injecting new ones at random times.</li>
+    <li>Run web servers that process one request for its full duration and then ask for the next one.</li>
+    <li>Autoscale the server pool with the 50×/80× rule and a cooldown of <code>n</code> cycles.</li>
+    <li>Block requests from configured IP ranges (firewall / DOS prevention) and count the rejections.</li>
+    <li>Write a colour-coded event stream in verbose mode and a START/END summary in both quiet and verbose mode, to the console and to a plain-text log file.</li>
+    <li><em>Bonus:</em> a <code>Switch</code> that routes streaming jobs to one load balancer and processing jobs to another, each with its own statistics.</li>
+  </ul>
+</section>
+
+<!-- ============================================================ -->
+<section id="data">
+  <h2>2. Data structures</h2>
+  <div class="grid2">
+    <div>
+      <h3><code>Request</code> — a struct</h3>
+      <p>
+        A request is plain data with no behaviour, so it is a <code>struct</code>: <code>ipIn</code> (requester
+        IPv4 address as a string), <code>ipOut</code> (destination address), <code>time</code> (integer clock cycles
+        of work), <code>jobType</code> (<code>'P'</code> or <code>'S'</code>) and <code>arrivedCycle</code>, the
+        clock value when it was created. The last field is not in the assignment text; it is added so the balancer
+        can report the <em>average time a request waited in the queue</em> in the end summary.
+      </p>
+    </div>
+    <div>
+      <h3><code>RequestQueue</code> — a FIFO</h3>
+      <p>
+        The queue wraps <code>std::queue&lt;Request&gt;</code> and exposes only <code>push</code>, <code>pop</code>,
+        <code>front</code>, <code>empty</code>, <code>size</code> and <code>peakSize</code>. First-in-first-out is the
+        right policy because every request is equally important and the balancer must never starve an old request in
+        favour of a new one. Wrapping the STL container (instead of using it directly) gives one place to record the
+        peak queue depth and keeps the load balancer's code independent of the container choice.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="uml">
+  <h2>3. Class diagram (UML)</h2>
+  <figure>
+    <a href="uml.svg" target="_blank" rel="noopener"><img src="uml.svg" alt="UML class diagram showing Request, RequestQueue, WebServer, LoadBalancer, IPBlocker, Logger, Config, RequestFactory free functions, the bonus Switch, and main.cpp with their attributes, methods and relationships"></a>
+    <figcaption>Figure 1 — Class diagram. Filled diamonds mark composition, open diamonds aggregation, solid arrows references, dashed arrows dependencies; the dashed box is the bonus component. <span class="open"><a href="uml.svg" target="_blank" rel="noopener">Open full size (SVG)</a> · <a href="uml.png" target="_blank" rel="noopener">PNG</a></span></figcaption>
+  </figure>
+  <p>
+    The <code>LoadBalancer</code> is the hub. It <em>owns</em> its <code>RequestQueue</code> and its
+    <code>vector&lt;WebServer&gt;</code> (composition — they live and die with the balancer), while it only
+    <em>references</em> the <code>IPBlocker</code>, <code>Logger</code> and <code>Config</code>. That split is
+    deliberate: the requirement that "multiple load balancers can be created" means two balancers must be able to
+    share one firewall, one log file and one configuration while each keeps a private queue and server pool.
+    <code>WebServer</code> holds at most one <code>Request</code> at a time; <code>RequestQueue</code> holds many.
+    <code>main.cpp</code> creates and drives everything and is written by hand as required.
+  </p>
+</section>
+
+<!-- ============================================================ -->
+<section id="classes">
+  <h2>4. Classes, responsibilities and interfaces</h2>
+  <p>Each class has one job. The tables list the public operations with their inputs and outputs, which is the contract Part 2 will implement.</p>
+
+  <h3>4.1 <code>WebServer</code></h3>
+  <p>Processes exactly one request at a time. It has no knowledge of the queue or of other servers; the balancer feeds it.</p>
+  <table>
+    <tr><th style="width:36%">Operation</th><th>Input</th><th>Output / effect</th></tr>
+    <tr><td><code>WebServer(id)</code></td><td>integer id (1-based, printed in logs as <code>srv 03</code>)</td><td>idle server</td></tr>
+    <tr><td><code>assign(r, cycle)</code></td><td>a <code>Request</code>, current clock</td><td>stores the request, sets <code>finishCycle_ = cycle + r.time</code>, becomes busy</td></tr>
+    <tr><td><code>tick(cycle)</code></td><td>current clock</td><td>adds one busy cycle; returns <code>true</code> exactly once, on the cycle the request completes, and frees the server (it "asks for the next request")</td></tr>
+    <tr><td><code>isBusy()</code>, <code>id()</code></td><td>—</td><td>state queries used by <code>dispatch()</code> and the logger</td></tr>
+    <tr><td><code>requestsHandled()</code>, <code>busyCycles()</code></td><td>—</td><td>counters for the utilization figure in the end summary</td></tr>
+  </table>
+
+  <h3>4.2 <code>LoadBalancer</code></h3>
+  <p>Owns the clock, the queue and the server pool for one pool of servers; generates arrivals, dispatches, autoscales and keeps statistics. Everything it needs from outside is injected through the constructor so several instances can coexist.</p>
+  <table>
+    <tr><th style="width:36%">Operation</th><th>Input</th><th>Output / effect</th></tr>
+    <tr><td><code>LoadBalancer(cfg, blocker, log, name)</code></td><td><code>Config&amp;</code>, <code>IPBlocker&amp;</code>, <code>Logger&amp;</code>, display name (e.g. <code>AGF-LB-P</code>)</td><td>creates <code>cfg.servers</code> idle <code>WebServer</code>s, clock = 0</td></tr>
+    <tr><td><code>seedQueue(count)</code></td><td>number of requests (<code>servers × 100</code>)</td><td>pushes that many random requests with <code>arrivedCycle = 0</code></td></tr>
+    <tr><td><code>addRequest(r)</code></td><td>a <code>Request</code></td><td><code>false</code> and <code>rejected++</code> if <code>blocker.isBlocked(r.ipIn)</code>; otherwise pushes it and returns <code>true</code></td></tr>
+    <tr><td><code>stepCycle()</code></td><td>—</td><td>one clock tick: <code>maybeGenerateRequest()</code> → tick every server → <code>dispatch()</code> → <code>autoscale()</code> → status heartbeat → <code>clock_++</code></td></tr>
+    <tr><td><code>run(cycles)</code></td><td>run length</td><td>calls <code>stepCycle()</code> that many times</td></tr>
+    <tr><td><code>queueSize()</code>, <code>activeServers()</code>, <code>inactiveServers()</code></td><td>—</td><td>live state for the status line and the demo</td></tr>
+    <tr><td><code>stats()</code></td><td>—</td><td>read-only <code>Stats</code>: generated, processed, rejected, scale-ups/downs, min/max servers, min/max queue, total wait, busy cycles</td></tr>
+    <tr><td><code>printSummary()</code></td><td>—</td><td>writes the START block (before the loop) or END block (after) through the logger</td></tr>
+    <tr><td><em>private</em> <code>dispatch()</code></td><td>—</td><td>while an idle server exists and the queue is not empty: pop → assign → log <span class="chip green">ASSIGN</span></td></tr>
+    <tr><td><em>private</em> <code>maybeGenerateRequest()</code></td><td>—</td><td>with probability <code>arrival_probability</code> builds a random request and calls <code>addRequest</code></td></tr>
+    <tr><td><em>private</em> <code>autoscale()</code></td><td>—</td><td>if <code>clock_ ≥ cooldownUntil_</code>: queue &lt; 50×N → <code>removeServer()</code>; queue &gt; 80×N → <code>addServer()</code>; either way <code>cooldownUntil_ = clock_ + n</code></td></tr>
+    <tr><td><em>private</em> <code>addServer()</code> / <code>removeServer()</code></td><td>—</td><td>push a new <code>WebServer(nextId)</code> / erase an <em>idle</em> server (a busy one is never dropped; if all are busy the removal is deferred to the next check), respecting <code>min_servers</code> / <code>max_servers</code>; log <span class="chip yellow">SCALE+</span> / <span class="chip yellow">SCALE-</span></td></tr>
+  </table>
+
+  <h3>4.3 <code>IPBlocker</code> — firewall / DOS prevention</h3>
+  <table>
+    <tr><th style="width:36%">Operation</th><th>Input</th><th>Output / effect</th></tr>
+    <tr><td><code>addRange(cidr)</code></td><td>a range such as <code>10.0.0.0/8</code> or <code>192.168.100.0/24</code></td><td><code>true</code> if parsed; stores base address and mask bits</td></tr>
+    <tr><td><code>isBlocked(ip)</code></td><td>dotted IPv4 string</td><td><code>true</code> if the address falls in any stored range (bitwise compare after converting to a 32-bit integer); increments the blocked counter</td></tr>
+    <tr><td><code>blockedCount()</code>, <code>ranges()</code></td><td>—</td><td>for the summary and the START block</td></tr>
+  </table>
+
+  <h3>4.4 <code>Logger</code></h3>
+  <p>Single sink for all output. Writes coloured text (ANSI escape codes) to the console and the same text without colour codes to the log file, so the submitted log stays readable.</p>
+  <table>
+    <tr><th style="width:36%">Operation</th><th>Input</th><th>Output / effect</th></tr>
+    <tr><td><code>Logger(path, level, color)</code></td><td>log-file path, <code>Quiet</code> or <code>Verbose</code>, colour on/off</td><td>opens the file, writes the branded header</td></tr>
+    <tr><td><code>event(category, msg, cycle)</code></td><td>event category (ARRIVE, ASSIGN, DONE, BLOCK, SCALE+, SCALE-), text, clock</td><td><em>verbose only</em>: one line <code>[cycle&nbsp;&nbsp;412] [BLOCK] …</code> coloured by category</td></tr>
+    <tr><td><code>status(msg, cycle)</code></td><td>text, clock</td><td><em>verbose only</em>: periodic <span class="chip magenta">STATUS</span> heartbeat</td></tr>
+    <tr><td><code>summary(msg)</code></td><td>text</td><td><em>always</em>: START/END summary lines, console and file</td></tr>
+  </table>
+
+  <h3>4.5 <code>Config</code></h3>
+  <table>
+    <tr><th style="width:36%">Operation</th><th>Input</th><th>Output / effect</th></tr>
+    <tr><td><code>load(path)</code></td><td>path to <code>config.txt</code></td><td><code>true</code> on success; parses <code>key = value</code> lines, ignores blanks and <code>#</code> comments</td></tr>
+    <tr><td><code>getInt / getDouble / getBool / getString(key, default)</code></td><td>key name and fallback</td><td>typed value, or the fallback when the key is missing (so a partial file still runs)</td></tr>
+    <tr><td><code>getList(key)</code></td><td>key name</td><td>comma-separated values split into a vector (used for <code>blocked_ranges</code>)</td></tr>
+  </table>
+
+  <h3>4.6 <code>RequestFactory</code> free functions (<code>Random.h</code>)</h3>
+  <p>
+    <code>randomIPv4()</code> → dotted string; <code>randomTaskTime(min, max)</code> → integer in the configured
+    range; <code>randomJobType()</code> → <code>'P'</code> or <code>'S'</code> with equal probability;
+    <code>makeRequest(cfg, cycle)</code> → a complete <code>Request</code>. These are small, self-contained helpers,
+    which is exactly the category of code the project rules allow to be AI-assisted once the design is fixed.
+    They use one <code>std::mt19937</code> engine seeded once so a run is reproducible when a seed is given in the config.
+  </p>
+
+  <h3>4.7 <code>Switch</code> (bonus)</h3>
+  <table>
+    <tr><th style="width:36%">Operation</th><th>Input</th><th>Output / effect</th></tr>
+    <tr><td><code>attach(jobType, lb)</code></td><td><code>'P'</code> or <code>'S'</code>, a <code>LoadBalancer&amp;</code></td><td>registers the balancer for that job type</td></tr>
+    <tr><td><code>route(r)</code></td><td>a <code>Request</code></td><td>forwards to the balancer registered for <code>r.jobType</code>; returns its <code>addRequest</code> result</td></tr>
+    <tr><td><code>stepAll()</code>, <code>summaryAll()</code></td><td>—</td><td>ticks every attached balancer in lock-step; prints one END block per balancer so the statistics stay separate</td></tr>
+  </table>
+  <p class="small">When the Switch is enabled, random arrivals are generated by <code>main</code> and routed through the Switch instead of inside each balancer, so the two pools see the correct job mix.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="workflow">
+  <h2>5. Workflow</h2>
+  <figure>
+    <a href="flow.svg" target="_blank" rel="noopener"><img src="flow.svg" alt="Flow diagram of the simulation: read config, prompt user, build components, seed queue, then a per-cycle loop of random arrival, firewall check, server tick, dispatch, autoscale with cooldown and status heartbeat, ending with the END summary"></a>
+    <figcaption>Figure 2 — Simulation workflow. Box accents use the same five colours as the console events (green arrive/assign, cyan done, red block, yellow scale, magenta status). <span class="open"><a href="flow.svg" target="_blank" rel="noopener">Open full size (SVG)</a> · <a href="flow.png" target="_blank" rel="noopener">PNG</a></span></figcaption>
+  </figure>
+
+  <h3>Start-up (steps 1–4)</h3>
+  <p>
+    <code>main</code> loads <code>config.txt</code>, then prompts for the two interactive inputs the assignment
+    requires — number of web servers and run time in cycles — which override the file. It constructs the
+    <code>Logger</code>, loads every <code>blocked_ranges</code> entry into the <code>IPBlocker</code>, and builds the
+    <code>LoadBalancer</code> (or, for the bonus, a <code>Switch</code> with one balancer for <code>'P'</code> and one
+    for <code>'S'</code>). <code>seedQueue(servers × 100)</code> fills the starting queue, and the START summary records
+    the server count, starting queue size, task-time range, thresholds, cooldown and blocked ranges so the log is
+    self-describing.
+  </p>
+
+  <h3>The per-cycle loop (steps 5–10 = <code>LoadBalancer::stepCycle</code>)</h3>
+  <ol>
+    <li><strong>Arrival</strong> <span class="chip green">ARRIVE</span> — with probability <code>arrival_probability</code> a new random request is created this cycle.</li>
+    <li><strong>Firewall</strong> <span class="chip red">BLOCK</span> — <code>IPBlocker.isBlocked(ipIn)</code>; a hit is counted as rejected and logged, and the request is discarded. Otherwise it joins the queue (bonus: the Switch picks the queue by job type).</li>
+    <li><strong>Servers tick</strong> <span class="chip cyan">DONE</span> — every busy server advances one cycle; a server whose <code>finishCycle_</code> is reached logs completion and becomes idle, i.e. asks for the next request.</li>
+    <li><strong>Dispatch</strong> <span class="chip green">ASSIGN</span> — queued requests are popped FIFO onto idle servers until one side runs out. Wait time (<code>cycle − arrivedCycle</code>) is accumulated here.</li>
+    <li><strong>Autoscale</strong> <span class="chip yellow">SCALE±</span> — only when the cooldown has expired: queue below 50×N removes one idle server, above 80×N adds one; either action sets <code>cooldownUntil = cycle + n</code>. Inside the band nothing happens.</li>
+    <li><strong>Heartbeat</strong> <span class="chip magenta">STATUS</span> — in verbose mode a status line every <code>status_every</code> cycles (never every cycle, or a 100&nbsp;000-cycle run would be unreadable); then the clock advances.</li>
+  </ol>
+  <p>Ordering matters: servers tick <em>before</em> dispatch so a server that finishes this cycle picks up new work in the same cycle, and autoscaling runs <em>after</em> dispatch so it judges the queue that is genuinely still waiting.</p>
+
+  <h3>Shutdown (step 9)</h3>
+  <p>
+    When <code>cycle == runCycles</code> the END summary is written in both modes: ending queue size, requests
+    generated / processed / rejected, active servers and servers removed, scale-ups / downs, min and max servers,
+    min and max queue depth, average wait and server utilization, plus the P/S split. This block is the
+    "load balancer log" deliverable for the 20-server, 100&nbsp;000-cycle quiet-mode run.
+  </p>
+</section>
+
+<!-- ============================================================ -->
+<section id="choices">
+  <h2>6. Design choices</h2>
+  <ul>
+    <li><strong>Cooldown <code>n</code> after every scaling action.</strong> Adding a server does not shrink the queue instantly, and removing one does not grow it instantly. Without a rest period the balancer would add and remove servers on consecutive cycles (thrashing). <code>n</code> is configurable so experiments can show the trade-off between responsiveness and stability.</li>
+    <li><strong>Hard <code>min_servers</code> / <code>max_servers</code> bounds.</strong> The 50×/80× rule alone could scale to zero servers when the queue empties, or without limit under a flood; bounds keep the simulation (and the "company") within a sane budget.</li>
+    <li><strong>Never remove a busy server.</strong> Scale-down takes an idle server; if every server is busy the removal waits for the next check. No request is silently dropped by scaling — the only discarded requests are firewall rejections, and those are counted.</li>
+    <li><strong>Configuration file, not constants.</strong> Every tunable (thresholds, task-time range, arrival probability, <code>n</code>, bounds, blocked ranges, mode, colour, log path, status interval, RNG seed) lives in <code>config.txt</code>, satisfying "configurable without editing code" and making the experiments in §8 a matter of editing one file.</li>
+    <li><strong>Quiet vs verbose logging.</strong> Quiet prints only the START and END summaries — the deliverable log. Verbose adds the per-event stream and the periodic status line for the demo. The level is a constructor argument of <code>Logger</code>, so no <code>if (verbose)</code> clutter in the balancer.</li>
+    <li><strong>Colour by event type.</strong> <span class="chip green">ARRIVE / ASSIGN</span> green, <span class="chip cyan">DONE</span> cyan, <span class="chip red">BLOCK</span> red, <span class="chip yellow">SCALE+ / SCALE-</span> yellow, <span class="chip magenta">STATUS</span> magenta. Colours go to the console only; the file gets plain text.</li>
+    <li><strong>Firewall at admission time.</strong> Blocking happens before a request ever touches the queue, so a DOS flood from a blocked range costs one comparison per request and never consumes server capacity. CIDR ranges are stored as (base, mask) integers so the check is a single bitwise AND.</li>
+    <li><strong>Dependency injection for multiple balancers.</strong> <code>LoadBalancer</code> takes its <code>Config</code>, <code>IPBlocker</code> and <code>Logger</code> by reference and owns only its queue and servers. Two balancers therefore share the firewall and the log but keep separate statistics — exactly what the bonus <code>Switch</code> needs.</li>
+    <li><strong>Request is a struct, queue is a FIFO wrapper.</strong> Plain data where there is no behaviour; a thin wrapper where the container choice should stay hidden and a peak-size counter is useful.</li>
+  </ul>
+</section>
+
+<!-- ============================================================ -->
+<section id="config">
+  <h2>7. Configuration file and log layout</h2>
+  <div class="grid2">
+    <div>
+      <h3>Planned <code>config.txt</code></h3>
+<pre><code># config.txt - AggieForge Traffic Cloud
+servers             = 20
+cycles              = 100000
+initial_multiplier  = 100     # start queue = servers * 100
+task_time_min       = 3
+task_time_max       = 80
+arrival_probability = 0.6     # new request per cycle
+cooldown_n          = 50      # rest after add/remove
+scale_low           = 50      # per-server lower bound
+scale_high          = 80      # per-server upper bound
+min_servers         = 1
+max_servers         = 200
+blocked_ranges      = 10.0.0.0/8, 192.168.100.0/24
+mode                = quiet   # quiet | verbose
+color               = true
+log_file            = lb_log.txt
+status_every        = 1000
+seed                = 412     # 0 = random
+switch_enabled      = false   # bonus</code></pre>
+    </div>
+    <div>
+      <h3>Planned END summary (quiet mode)</h3>
+<pre><code>=== AggieForge Traffic Cloud - Summary ===
+Servers (initial)    : 20
+Run length           : 100000 cycles
+Starting queue size  : 2000
+Task time range      : 3 - 80 cycles
+Arrival probability  : 0.60 / cycle
+Scale thresholds     : 50 - 80 per server, n = 50
+Blocked IP ranges    : 10.0.0.0/8, 192.168.100.0/24
+--- End status ---
+Ending queue size    : ....
+Requests generated   : ....   (P: ...., S: ....)
+Requests processed   : ....
+Requests rejected    : ....   (firewall)
+Active servers (end) : ..     Removed: ..
+Scale-ups / downs    : .. / ..
+Min / max servers    : .. / ..
+Min / max queue      : .... / ....
+Avg wait in queue    : ...  cycles
+Server utilization   : .. %</code></pre>
+    </div>
+  </div>
+  <p class="small">The summary gives the three required items (starting queue, ending queue, task-time range) plus eight additional measures, which covers the "at least three other important pieces of information" requirement with margin.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="experiments">
+  <h2>8. Planned experiments</h2>
+  <p>Each run changes one parameter in <code>config.txt</code> and records ending queue size, the server count over time, rejections, average wait and utilization. The results become the capacity guide on the Doxygen main page and in the demo.</p>
+  <table>
+    <tr><th>Experiment</th><th>Vary</th><th>Question answered</th></tr>
+    <tr><td>Baseline</td><td>20 servers, 100&nbsp;000 cycles, defaults above</td><td>The required deliverable log; does the pool settle inside the 50×–80× band?</td></tr>
+    <tr><td>Arrival rate</td><td><code>arrival_probability</code> 0.3 / 0.6 / 0.9 / 1.5 (≥1 means more than one per cycle)</td><td>At what load does the pool hit <code>max_servers</code> and the queue grow without bound?</td></tr>
+    <tr><td>Task length</td><td><code>task_time_max</code> 20 / 80 / 300</td><td>How does longer work change the steady-state server count and wait time?</td></tr>
+    <tr><td>Rest period</td><td><code>cooldown_n</code> 5 / 50 / 500</td><td>Thrashing vs sluggishness: how many scale events, and how far does the queue overshoot the band?</td></tr>
+    <tr><td>Firewall</td><td>block <code>0.0.0.0/1</code> (half the address space)</td><td>Rejections dominate; confirms blocked traffic never reaches the servers.</td></tr>
+    <tr><td>Bonus switch</td><td><code>switch_enabled = true</code></td><td>Two pools with separate statistics; compare P vs S load.</td></tr>
+  </table>
+  <h3>Next steps (Part 2, due October 25, 2026)</h3>
+  <ul class="checklist">
+    <li>Hand-write <code>main.cpp</code> and the class skeletons exactly as specified above; Makefile; git repository with this design folder as the first commit.</li>
+    <li>Fixed-size simulation → autoscaling → logger modes and colours → firewall → config file → Doxygen → bonus switch.</li>
+    <li>Doxygen HTML with this branding hosted beside this page; deliverable log from the 20-server / 100&nbsp;000-cycle quiet run; demo video.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer class="brand">
+  <div class="inner">
+    <img src="logo.svg" alt="AggieForge Traffic Cloud">
+    <p>© 2026 AggieForge Traffic Cloud · Daniel Tang · CSCE 412 Cloud Computing, Texas A&amp;M University · Document AGF-DOC-005 · Design pre-deliverable, October 18, 2026</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 2334" width="1500" height="2334" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif">
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#232323"/>
+  </marker>
+  <marker id="arrowOpen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10" fill="none" stroke="#232323" stroke-width="1.6"/>
+  </marker>
+  <marker id="diamondFilled" viewBox="0 0 20 12" refX="1" refY="6" markerWidth="18" markerHeight="11" orient="auto-start-reverse">
+    <path d="M1,6 L10,1 L19,6 L10,11 z" fill="#232323" stroke="#232323"/>
+  </marker>
+  <marker id="diamondOpen" viewBox="0 0 20 12" refX="1" refY="6" markerWidth="18" markerHeight="11" orient="auto-start-reverse">
+    <path d="M1,6 L10,1 L19,6 L10,11 z" fill="#fff" stroke="#232323" stroke-width="1.4"/>
+  </marker>
+  <marker id="arrowG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#232323"/>
+  </marker>
+</defs>
+<rect width="1500" height="2334" fill="#F5F2EC"/>
+<rect x="0" y="0" width="1500" height="58" fill="#500000"/><rect x="0" y="58" width="1500" height="3" fill="#E0731D"/><g transform="translate(18,10) scale(0.19)"><path d="M62,182 h118 a34,34 0 0 0 10,-66 a46,46 0 0 0 -88,-14 a36,36 0 0 0 -40,80 z" fill="#F5F2EC" stroke="#F5F2EC" stroke-width="7" stroke-linejoin="round"/><path d="M64,124 q0,-8 13,-10 l22,-2 h74 v22 h-20 l-9,11 v9 l16,10 v8 h-56 v-8 l16,-10 v-9 l-9,-11 h-19 l-12,-2 q-13,-2 -13,-8 z" fill="#500000"/><path d="M196,42 l6,14 14,6 -14,6 -6,14 -6,-14 -14,-6 14,-6 z" fill="#E0731D"/></g><text x="72" y="26" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="18" font-weight="600" fill="#F5F2EC">AggieForge</text><text x="172" y="26" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="18" font-weight="600" fill="#E0731D">Traffic Cloud</text><text x="72" y="46" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#F5F2EC">CSCE 412 - Project 4 Load Balancer - Design Document AGF-DOC-005</text><text x="1480" y="36" text-anchor="end" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="20" font-weight="600" fill="#F5F2EC">Simulation Workflow</text>
+<rect x="450.0" y="100" width="220" height="48" rx="24" fill="#500000" stroke="#500000"/>
+<text x="560" y="130.0" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="16" font-weight="600" fill="#F5F2EC">START</text>
+<polyline points="560,148 560,176" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<rect x="300.0" y="176" width="520" height="112" rx="7" fill="#fff" stroke="#232323" stroke-width="1.6"/>
+<rect x="300.0" y="176" width="8" height="112" rx="3" fill="#500000"/>
+<text x="564" y="202" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#232323">1. Read config.txt</text>
+<text x="564" y="222" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">servers, cycles, task_time_min/max, arrival_probability,</text>
+<text x="564" y="242" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">cooldown_n, scale_low (50) / scale_high (80), min/max servers,</text>
+<text x="564" y="262" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">blocked_ranges, mode (quiet | verbose), color, log_file</text>
+<polyline points="560,288 560,318" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<rect x="300.0" y="318" width="520" height="92" rx="7" fill="#fff" stroke="#232323" stroke-width="1.6"/>
+<rect x="300.0" y="318" width="8" height="92" rx="3" fill="#500000"/>
+<text x="564" y="344" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#232323">2. Prompt the user  (requirement 4)</text>
+<text x="564" y="364" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">number of web servers N   -&gt;  overrides config</text>
+<text x="564" y="384" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">run time in clock cycles  -&gt;  overrides config</text>
+<polyline points="560,410 560,440" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<rect x="300.0" y="440" width="520" height="112" rx="7" fill="#fff" stroke="#232323" stroke-width="1.6"/>
+<rect x="300.0" y="440" width="8" height="112" rx="3" fill="#500000"/>
+<text x="564" y="466" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#232323">3. Build the components</text>
+<text x="564" y="486" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">Logger(log_file, mode, color)   IPBlocker.addRange() for each blocked range</text>
+<text x="564" y="506" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">LoadBalancer(cfg, blocker, logger)  -&gt;  creates N WebServer(id)</text>
+<text x="564" y="526" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">bonus: Switch + LoadBalancer 'AGF-LB-P' + LoadBalancer 'AGF-LB-S'</text>
+<polyline points="560,552 560,582" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<rect x="300.0" y="582" width="520" height="112" rx="7" fill="#fff" stroke="#232323" stroke-width="1.6"/>
+<rect x="300.0" y="582" width="8" height="112" rx="3" fill="#500000"/>
+<text x="564" y="608" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#232323">4. Seed the starting queue</text>
+<text x="564" y="628" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">push N x 100 random Requests  (makeRequest: ipIn, ipOut, time, jobType)</text>
+<text x="564" y="648" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">log START summary: servers, starting queue size, task-time range,</text>
+<text x="564" y="668" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">thresholds 50xN / 80xN, cooldown n, blocked ranges</text>
+<polyline points="560,694 560,728" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<polygon points="560,728 725.0,776.0 560,824 395.0,776.0" fill="#fff8ee" stroke="#500000" stroke-width="2"/>
+<text x="560" y="781.0" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="600" fill="#232323">cycle &lt; runCycles ?</text>
+<polyline points="725,776 960,776" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<text x="739" y="770" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#500000">no</text>
+<rect x="960.0" y="688" width="400" height="132" rx="7" fill="#fff" stroke="#232323" stroke-width="1.6"/>
+<rect x="960.0" y="688" width="8" height="132" rx="3" fill="#8E24AA"/>
+<text x="1164" y="714" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#232323">9. Log END summary  (quiet + verbose)</text>
+<text x="1164" y="734" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">ending queue size, generated / processed / rejected,</text>
+<text x="1164" y="754" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">active vs inactive (removed) servers, scale-ups / downs,</text>
+<text x="1164" y="774" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">min / max servers, min / max queue, avg wait, utilization,</text>
+<text x="1164" y="794" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">P / S split (bonus: one block per load balancer)</text>
+<polyline points="1160,820 1160,848" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<rect x="1070.0" y="848" width="180" height="48" rx="24" fill="#500000" stroke="#500000"/>
+<text x="1160" y="878.0" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="16" font-weight="600" fill="#F5F2EC">END</text>
+<polyline points="560,824 560,854" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<text x="570" y="818" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#500000">yes</text>
+<rect x="300.0" y="854" width="520" height="92" rx="7" fill="#fff" stroke="#232323" stroke-width="1.6"/>
+<rect x="300.0" y="854" width="8" height="92" rx="3" fill="#2E7D32"/>
+<rect x="702.0" y="843" width="110" height="22" rx="11" fill="#2E7D32"/>
+<text x="757.0" y="858" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#fff">ARRIVE</text>
+<text x="564" y="880" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#232323">5. Random arrival  (requirement 9)</text>
+<text x="564" y="900" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">with probability arrival_probability this cycle:</text>
+<text x="564" y="920" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">r = makeRequest(cfg, cycle)   -&gt;   ipIn, ipOut, time in [min,max], 'P'/'S'</text>
+<polyline points="560,946 560,976" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<polygon points="560,976 750.0,1024.0 560,1072 370.0,1024.0" fill="#fff8ee" stroke="#B3261E" stroke-width="2"/>
+<text x="560" y="1029.0" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="600" fill="#232323">IPBlocker.isBlocked(r.ipIn) ?</text>
+<polyline points="750,1024 860,1024" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<text x="764" y="1018" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#500000">yes</text>
+<rect x="860.0" y="986" width="330" height="92" rx="7" fill="#fff" stroke="#232323" stroke-width="1.6"/>
+<rect x="860.0" y="986" width="8" height="92" rx="3" fill="#B3261E"/>
+<rect x="1072.0" y="975" width="110" height="22" rx="11" fill="#B3261E"/>
+<text x="1127.0" y="990" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#fff">BLOCK</text>
+<text x="1029" y="1012" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#232323">Reject the request</text>
+<text x="1029" y="1032" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">stats.rejected++ ; log BLOCK (red):</text>
+<text x="1029" y="1052" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">'&lt;ip&gt; rejected (range &lt;cidr&gt;)'</text>
+<polyline points="560,1072 560,1102" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<text x="570" y="1066" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#500000">no</text>
+<rect x="300.0" y="1102" width="520" height="92" rx="7" fill="#fff" stroke="#232323" stroke-width="1.6"/>
+<rect x="300.0" y="1102" width="8" height="92" rx="3" fill="#2E7D32"/>
+<text x="564" y="1128" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#232323">6. Admit the request</text>
+<text x="564" y="1148" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">queue_.push(r)   (bonus: Switch.route(r) picks the LB by jobType)</text>
+<text x="564" y="1168" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">stats.generated++ ; verbose: log ARRIVE (green)</text>
+<polyline points="1025.0,1078 1025.0,1209 560,1209" fill="none" stroke="#232323" stroke-width="1.8"/>
+<polyline points="560,1194 560,1224" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<rect x="300.0" y="1224" width="520" height="112" rx="7" fill="#fff" stroke="#232323" stroke-width="1.6"/>
+<rect x="300.0" y="1224" width="8" height="112" rx="3" fill="#00838F"/>
+<rect x="702.0" y="1213" width="110" height="22" rx="11" fill="#00838F"/>
+<text x="757.0" y="1228" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#fff">DONE</text>
+<text x="564" y="1250" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#232323">7. Advance every WebServer one cycle</text>
+<text x="564" y="1270" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">for each server: done = tick(cycle)</text>
+<text x="564" y="1290" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">done -&gt; handled++ ; busy_ = false ; verbose: log DONE (cyan)</text>
+<text x="564" y="1310" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">   'srv 03 finished; asking for next'</text>
+<polyline points="560,1336 560,1366" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<rect x="300.0" y="1366" width="520" height="112" rx="7" fill="#fff" stroke="#232323" stroke-width="1.6"/>
+<rect x="300.0" y="1366" width="8" height="112" rx="3" fill="#2E7D32"/>
+<rect x="702.0" y="1355" width="110" height="22" rx="11" fill="#2E7D32"/>
+<text x="757.0" y="1370" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#fff">ASSIGN</text>
+<text x="564" y="1392" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#232323">8. Dispatch  queue -&gt; idle servers</text>
+<text x="564" y="1412" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">while (idle server exists &amp;&amp; !queue_.empty()):</text>
+<text x="564" y="1432" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">   r = queue_.pop() ; server.assign(r, cycle) ; totalWait += cycle - r.arrivedCycle</text>
+<text x="564" y="1452" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">   verbose: log ASSIGN (green)  'srv 03 &lt;- 172.16.4.9 -&gt; 8.8.8.8 (P, 41 cyc)'</text>
+<polyline points="560,1478 560,1512" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<polygon points="560,1512 740.0,1564.0 560,1616 380.0,1564.0" fill="#fff8ee" stroke="#B98A00" stroke-width="2"/>
+<text x="560" y="1559.0" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="600" fill="#232323">cycle &gt;= cooldownUntil ?</text>
+<text x="560" y="1579.0" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#232323">(rest period n elapsed)</text>
+<polyline points="740,1564 830,1564" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<text x="754" y="1558" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#500000">yes</text>
+<polygon points="1010,1512 1180.0,1564.0 1010,1616 840.0,1564.0" fill="#fff8ee" stroke="#B98A00" stroke-width="2"/>
+<text x="1010" y="1559.0" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="600" fill="#232323">queue &lt; 50 x N</text>
+<text x="1010" y="1579.0" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#232323">and N &gt; min_servers ?</text>
+<polyline points="1010,1616 1010,1642" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<text x="1020" y="1612" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#500000">yes</text>
+<rect x="810.0" y="1642" width="400" height="92" rx="7" fill="#fff" stroke="#232323" stroke-width="1.6"/>
+<rect x="810.0" y="1642" width="8" height="92" rx="3" fill="#B98A00"/>
+<rect x="1092.0" y="1631" width="110" height="22" rx="11" fill="#B98A00"/>
+<text x="1147.0" y="1646" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#fff">SCALE-</text>
+<text x="1014" y="1668" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#232323">Scale DOWN  -&gt;  remove one idle server</text>
+<text x="1014" y="1688" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">stats.scaleDowns++ ; cooldownUntil = cycle + n</text>
+<text x="1014" y="1708" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">log SCALE- (yellow); a busy server is never dropped</text>
+<polyline points="1180,1564 1240,1564 1240,1812 1188,1812" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<text x="1188" y="1554" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#500000">no</text>
+<polygon points="1010,1760 1180.0,1812.0 1010,1864 840.0,1812.0" fill="#fff8ee" stroke="#B98A00" stroke-width="2"/>
+<text x="1010" y="1807.0" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="600" fill="#232323">queue &gt; 80 x N</text>
+<text x="1010" y="1827.0" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#232323">and N &lt; max_servers ?</text>
+<polyline points="1010,1864 1010,1890" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<text x="1020" y="1860" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#500000">yes</text>
+<rect x="810.0" y="1890" width="400" height="92" rx="7" fill="#fff" stroke="#232323" stroke-width="1.6"/>
+<rect x="810.0" y="1890" width="8" height="92" rx="3" fill="#B98A00"/>
+<rect x="1092.0" y="1879" width="110" height="22" rx="11" fill="#B98A00"/>
+<text x="1147.0" y="1894" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#fff">SCALE+</text>
+<text x="1014" y="1916" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#232323">Scale UP  -&gt;  add one WebServer(nextId)</text>
+<text x="1014" y="1936" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">stats.scaleUps++ ; cooldownUntil = cycle + n</text>
+<text x="1014" y="1956" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">log SCALE+ (yellow)  'queue 1710 &gt; 80*20=1600 -&gt; add srv 21'</text>
+<polyline points="840,1812 800,1812 800,2002 580,2002" fill="none" stroke="#232323" stroke-width="1.8"/>
+<text x="796" y="1804" text-anchor="end" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#500000">no</text>
+<text x="590" y="1994" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="600" fill="#500000">in range (50xN &lt;= queue &lt;= 80xN) or no change -&gt; continue</text>
+<polyline points="1010,1734 1010,1746 801,1746" fill="none" stroke="#232323" stroke-width="1.8"/>
+<polyline points="1010,1982 1010,2002" fill="none" stroke="#232323" stroke-width="1.8"/>
+<polyline points="560,1616 560,2022" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<text x="570" y="1612" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#500000">no</text>
+<rect x="300.0" y="2022" width="520" height="92" rx="7" fill="#fff" stroke="#232323" stroke-width="1.6"/>
+<rect x="300.0" y="2022" width="8" height="92" rx="3" fill="#8E24AA"/>
+<rect x="702.0" y="2011" width="110" height="22" rx="11" fill="#8E24AA"/>
+<text x="757.0" y="2026" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#fff">STATUS</text>
+<text x="564" y="2048" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#232323">10. Status heartbeat  (verbose only, every status_every cycles)</text>
+<text x="564" y="2068" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">log STATUS (magenta): queue, active servers, idle, rejected so far</text>
+<text x="564" y="2088" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="normal" fill="#444">then  cycle++  (clock_ = cycle)</text>
+<polyline points="560,2114 560,2144 60,2144 60,776 395,776" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrow)"/>
+<text x="70" y="2140" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#500000">next cycle</text>
+<text x="54" y="1421.0" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#232323"></text>
+<text transform="translate(46,1421.0) rotate(-90)" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#500000">per-cycle loop (steps 5 - 10 = LoadBalancer::stepCycle)</text>
+<rect x="1010" y="100" width="440" height="94" rx="4" fill="#fffdf8" stroke="#8A929B" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1020" y="120" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#444">Inputs:  config.txt  +  two interactive values</text>
+<text x="1020" y="138" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#444">Outputs: colored console events (verbose) and a plain-text log</text>
+<text x="1020" y="156" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#444">         file; START and END summaries in both modes</text>
+<text x="1020" y="174" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#444">Deliverable run: N = 20 servers, 100 000 cycles, quiet mode</text>
+<rect x="1010" y="232" width="440" height="76" rx="4" fill="#fffdf8" stroke="#8A929B" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1020" y="252" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#444">Event colours (requirement 15) match the box accents here:</text>
+<text x="1020" y="270" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#444">green ARRIVE/ASSIGN   cyan DONE   red BLOCK</text>
+<text x="1020" y="288" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#444">yellow SCALE+/SCALE-   magenta STATUS</text>
+<rect x="60" y="2174" width="430" height="94" rx="4" fill="#fffdf8" stroke="#8A929B" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="70" y="2194" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#444">Invariant the autoscaler keeps:</text>
+<text x="70" y="2212" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#444">    50 x N  &lt;=  queue size  &lt;=  80 x N   (N = active servers)</text>
+<text x="70" y="2230" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#444">Cooldown n stops thrashing: after any add/remove the rule is</text>
+<text x="70" y="2248" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#444">not re-evaluated until n cycles have passed.</text>
+<rect x="1010" y="2174" width="440" height="94" rx="4" fill="#fffdf8" stroke="#8A929B" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1020" y="2194" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#444">Bonus (dashed in the UML): Switch sits in front of two load</text>
+<text x="1020" y="2212" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#444">balancers. Step 6 becomes Switch.route(r): 'S' -&gt; AGF-LB-S,</text>
+<text x="1020" y="2230" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#444">'P' -&gt; AGF-LB-P; steps 7 - 10 run once per load balancer and</text>
+<text x="1020" y="2248" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#444">each prints its own END summary.</text>
+<text x="1480" y="2322" text-anchor="end" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="normal" fill="#8A929B">AggieForge Traffic Cloud  -  Daniel Tang  -  CSCE 412 Cloud Computing, Texas A&amp;M University  -  Oct 2026</text>
+</svg>

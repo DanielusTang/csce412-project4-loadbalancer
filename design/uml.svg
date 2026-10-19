@@ -1,0 +1,186 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1620 1170" width="1620" height="1170" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif">
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#232323"/>
+  </marker>
+  <marker id="arrowOpen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10" fill="none" stroke="#232323" stroke-width="1.6"/>
+  </marker>
+  <marker id="diamondFilled" viewBox="0 0 20 12" refX="1" refY="6" markerWidth="18" markerHeight="11" orient="auto-start-reverse">
+    <path d="M1,6 L10,1 L19,6 L10,11 z" fill="#232323" stroke="#232323"/>
+  </marker>
+  <marker id="diamondOpen" viewBox="0 0 20 12" refX="1" refY="6" markerWidth="18" markerHeight="11" orient="auto-start-reverse">
+    <path d="M1,6 L10,1 L19,6 L10,11 z" fill="#fff" stroke="#232323" stroke-width="1.4"/>
+  </marker>
+  <marker id="arrowG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#232323"/>
+  </marker>
+</defs>
+<rect width="1620" height="1170" fill="#F5F2EC"/>
+<rect x="0" y="0" width="1620" height="58" fill="#500000"/><rect x="0" y="58" width="1620" height="3" fill="#E0731D"/><g transform="translate(18,10) scale(0.19)"><path d="M62,182 h118 a34,34 0 0 0 10,-66 a46,46 0 0 0 -88,-14 a36,36 0 0 0 -40,80 z" fill="#F5F2EC" stroke="#F5F2EC" stroke-width="7" stroke-linejoin="round"/><path d="M64,124 q0,-8 13,-10 l22,-2 h74 v22 h-20 l-9,11 v9 l16,10 v8 h-56 v-8 l16,-10 v-9 l-9,-11 h-19 l-12,-2 q-13,-2 -13,-8 z" fill="#500000"/><path d="M196,42 l6,14 14,6 -14,6 -6,14 -6,-14 -14,-6 14,-6 z" fill="#E0731D"/></g><text x="72" y="26" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="18" font-weight="600" fill="#F5F2EC">AggieForge</text><text x="172" y="26" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="18" font-weight="600" fill="#E0731D">Traffic Cloud</text><text x="72" y="46" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#F5F2EC">CSCE 412 - Project 4 Load Balancer - Design Document AGF-DOC-005</text><text x="1600" y="36" text-anchor="end" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="20" font-weight="600" fill="#F5F2EC">Class Diagram (UML)</text>
+<polyline points="560,205.0 452,205.0" fill="none" stroke="#232323" stroke-width="1.8" marker-start="url(#diamondOpen)"/>
+<text x="506.0" y="198.0" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#8A929B" font-style="italic">holds 0..*</text>
+<polyline points="753.5,410 753.5,352" fill="none" stroke="#232323" stroke-width="1.8" marker-start="url(#diamondFilled)"/>
+<text x="763.5" y="385.0" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#8A929B" font-style="italic">queue_  1</text>
+<polyline points="1048,434 1150,434" fill="none" stroke="#232323" stroke-width="1.8" marker-start="url(#diamondFilled)"/>
+<text x="1099.0" y="427" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="normal" fill="#8A929B" font-style="italic">servers_ 1..*</text>
+<polyline points="1356.0,100 1356.0,78 246.0,78 246.0,100" fill="none" stroke="#232323" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrowOpen)"/>
+<text x="801.0" y="72" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#8A929B" font-style="italic">current_ : Request (0..1)  -  a WebServer processes one Request at a time</text>
+<polyline points="560,445.0 452,445.0" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrowOpen)"/>
+<text x="506.0" y="438.0" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="normal" fill="#8A929B" font-style="italic">blocker_ &amp;</text>
+<polyline points="560,696.0 452,696.0" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrowOpen)"/>
+<text x="506.0" y="689.0" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="normal" fill="#8A929B" font-style="italic">log_ &amp;</text>
+<polyline points="560,965.5 393,965.5" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrowOpen)"/>
+<text x="476.5" y="958.5" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="normal" fill="#8A929B" font-style="italic">cfg_ const&amp;</text>
+<polyline points="1048,565.0 1150,565.0" fill="none" stroke="#232323" stroke-width="1.8" stroke-dasharray="7 5" marker-start="url(#arrowOpen)"/>
+<text x="1099.0" y="558.0" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="normal" fill="#8A929B" font-style="italic">&lt;&lt;uses&gt;&gt;</text>
+<polyline points="1150,794.5 1048,794.5" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrowOpen)"/>
+<text x="1099.0" y="787.5" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="normal" fill="#8A929B" font-style="italic">lbs_ 1..*</text>
+<polyline points="1150,1025.5 988,1025.5 988,998" fill="none" stroke="#232323" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrowOpen)"/>
+<text x="1069.0" y="1043.5" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="normal" fill="#8A929B" font-style="italic">&lt;&lt;creates, drives&gt;&gt;</text>
+<rect x="40" y="100" width="412" height="210" rx="6" ry="6" fill="#ffffff" stroke="#232323" stroke-width="1.6"/>
+<path d="M40,106 a6,6 0 0 1 6,-6 h400 a6,6 0 0 1 6,6 v42 h-412 z" fill="#500000"/>
+<text x="246.0" y="117" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" fill="#F5F2EC" opacity=".8">&lt;&lt;struct&gt;&gt;</text>
+<text x="246.0" y="137" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="17" font-weight="600" fill="#F5F2EC">Request</text>
+<text x="49" y="172" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ ipIn    : std::string   // requester IP</text>
+<text x="49" y="193" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ ipOut   : std::string   // destination IP</text>
+<text x="49" y="214" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ time    : int           // cycles to process</text>
+<text x="49" y="235" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ jobType : char          // 'P' | 'S'</text>
+<text x="49" y="256" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ arrivedCycle : int      // for wait stats</text>
+<line x1="40" y1="271" x2="452" y2="271" stroke="#232323" stroke-width="1.2"/>
+<text x="49" y="295" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#8A929B">// plain data - no behaviour</text>
+<rect x="40" y="340" width="412" height="210" rx="6" ry="6" fill="#ffffff" stroke="#232323" stroke-width="1.6"/>
+<path d="M40,346 a6,6 0 0 1 6,-6 h400 a6,6 0 0 1 6,6 v42 h-412 z" fill="#500000"/>
+<text x="246.0" y="357" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" fill="#F5F2EC" opacity=".8">firewall / DOS prevention</text>
+<text x="246.0" y="377" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="17" font-weight="600" fill="#F5F2EC">IPBlocker</text>
+<text x="49" y="412" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- ranges_       : vector&lt;Range{base,maskBits}&gt;</text>
+<text x="49" y="433" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- blockedCount_ : int</text>
+<line x1="40" y1="448" x2="452" y2="448" stroke="#232323" stroke-width="1.2"/>
+<text x="49" y="472" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ addRange(cidr : string) : bool</text>
+<text x="49" y="493" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ isBlocked(ip : string) : bool</text>
+<text x="49" y="514" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ blockedCount() : int</text>
+<text x="49" y="535" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ ranges() : const vector&lt;Range&gt;&amp;</text>
+<rect x="40" y="570" width="412" height="252" rx="6" ry="6" fill="#ffffff" stroke="#232323" stroke-width="1.6"/>
+<path d="M40,576 a6,6 0 0 1 6,-6 h400 a6,6 0 0 1 6,6 v42 h-412 z" fill="#500000"/>
+<text x="246.0" y="587" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" fill="#F5F2EC" opacity=".8">console (color) + plain-text file</text>
+<text x="246.0" y="607" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="17" font-weight="600" fill="#F5F2EC">Logger</text>
+<text x="49" y="642" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- level_ : Level { Quiet, Verbose }</text>
+<text x="49" y="663" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- file_  : std::ofstream</text>
+<text x="49" y="684" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- color_ : bool            // ANSI on console</text>
+<line x1="40" y1="699" x2="452" y2="699" stroke="#232323" stroke-width="1.2"/>
+<text x="49" y="723" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ Logger(path, level : Level, color : bool)</text>
+<text x="49" y="744" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ event(cat : Category, msg, cycle : int)</text>
+<text x="49" y="765" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ status(msg : string, cycle : int) // verbose</text>
+<text x="49" y="786" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ summary(msg : string)             // always</text>
+<text x="49" y="807" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ setLevel(level : Level)</text>
+<rect x="40" y="850" width="353" height="231" rx="6" ry="6" fill="#ffffff" stroke="#232323" stroke-width="1.6"/>
+<path d="M40,856 a6,6 0 0 1 6,-6 h341 a6,6 0 0 1 6,6 v42 h-353 z" fill="#500000"/>
+<text x="216.5" y="867" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" fill="#F5F2EC" opacity=".8">config.txt parser (requirement 13)</text>
+<text x="216.5" y="887" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="17" font-weight="600" fill="#F5F2EC">Config</text>
+<text x="49" y="922" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- values_ : map&lt;string,string&gt;</text>
+<line x1="40" y1="937" x2="393" y2="937" stroke="#232323" stroke-width="1.2"/>
+<text x="49" y="961" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ load(path : string) : bool</text>
+<text x="49" y="982" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ getInt(key, def : int) : int</text>
+<text x="49" y="1003" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ getDouble(key, def : double) : double</text>
+<text x="49" y="1024" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ getBool(key, def : bool) : bool</text>
+<text x="49" y="1045" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ getString(key, def : string) : string</text>
+<text x="49" y="1066" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ getList(key) : vector&lt;string&gt;</text>
+<rect x="560" y="100" width="387" height="252" rx="6" ry="6" fill="#ffffff" stroke="#232323" stroke-width="1.6"/>
+<path d="M560,106 a6,6 0 0 1 6,-6 h375 a6,6 0 0 1 6,6 v42 h-387 z" fill="#500000"/>
+<text x="753.5" y="117" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" fill="#F5F2EC" opacity=".8">FIFO</text>
+<text x="753.5" y="137" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="17" font-weight="600" fill="#F5F2EC">RequestQueue</text>
+<text x="569" y="172" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- q_        : std::queue&lt;Request&gt;</text>
+<text x="569" y="193" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- peakSize_ : size_t</text>
+<line x1="560" y1="208" x2="947" y2="208" stroke="#232323" stroke-width="1.2"/>
+<text x="569" y="232" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ push(r : Request) : void</text>
+<text x="569" y="253" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ pop() : Request          // pre: !empty()</text>
+<text x="569" y="274" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ front() : const Request&amp;</text>
+<text x="569" y="295" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ empty() : bool</text>
+<text x="569" y="316" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ size() : size_t</text>
+<text x="569" y="337" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ peakSize() : size_t</text>
+<rect x="560" y="410" width="488" height="588" rx="6" ry="6" fill="#ffffff" stroke="#232323" stroke-width="1.6"/>
+<path d="M560,416 a6,6 0 0 1 6,-6 h476 a6,6 0 0 1 6,6 v42 h-488 z" fill="#500000"/>
+<text x="804.0" y="427" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" fill="#F5F2EC" opacity=".8">one instance per server pool</text>
+<text x="804.0" y="447" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="17" font-weight="600" fill="#F5F2EC">LoadBalancer</text>
+<text x="569" y="482" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- name_          : std::string   // 'AGF-LB-P' ...</text>
+<text x="569" y="503" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- queue_         : RequestQueue</text>
+<text x="569" y="524" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- servers_       : vector&lt;WebServer&gt;</text>
+<text x="569" y="545" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- blocker_       : IPBlocker&amp;</text>
+<text x="569" y="566" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- log_           : Logger&amp;</text>
+<text x="569" y="587" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- cfg_           : const Config&amp;</text>
+<text x="569" y="608" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- clock_         : int</text>
+<text x="569" y="629" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- cooldownUntil_ : int   // autoscale may act again</text>
+<text x="569" y="650" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- stats_ : Stats { generated, processed, rejected,</text>
+<text x="569" y="671" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">      scaleUps, scaleDowns, minServers, maxServers,</text>
+<text x="569" y="692" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">      minQueue, maxQueue, totalWait, busyCycles }</text>
+<line x1="560" y1="707" x2="1048" y2="707" stroke="#232323" stroke-width="1.2"/>
+<text x="569" y="731" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ LoadBalancer(cfg, blocker&amp;, log&amp;, name : string)</text>
+<text x="569" y="752" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ seedQueue(count : int) : void   // servers * 100</text>
+<text x="569" y="773" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ addRequest(r : Request) : bool  // false =&gt; blocked</text>
+<text x="569" y="794" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ stepCycle() : void              // one clock tick</text>
+<text x="569" y="815" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ run(cycles : int) : void        // calls stepCycle</text>
+<text x="569" y="836" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ queueSize() : size_t</text>
+<text x="569" y="857" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ activeServers() : int   + inactiveServers() : int</text>
+<text x="569" y="878" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ stats() : const Stats&amp;</text>
+<text x="569" y="899" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ printSummary() : void           // START / END block</text>
+<text x="569" y="920" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- dispatch() : void               // queue -&gt; idle srv</text>
+<text x="569" y="941" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- maybeGenerateRequest() : void   // random arrivals</text>
+<text x="569" y="962" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- autoscale() : void              // 50x/80x + cooldown</text>
+<text x="569" y="983" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- addServer() : void      - removeServer() : void</text>
+<rect x="1150" y="100" width="412" height="357" rx="6" ry="6" fill="#ffffff" stroke="#232323" stroke-width="1.6"/>
+<path d="M1150,106 a6,6 0 0 1 6,-6 h400 a6,6 0 0 1 6,6 v42 h-412 z" fill="#500000"/>
+<text x="1356.0" y="131" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="17" font-weight="600" fill="#F5F2EC">WebServer</text>
+<text x="1159" y="172" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- id_          : int</text>
+<text x="1159" y="193" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- busy_        : bool</text>
+<text x="1159" y="214" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- current_     : Request</text>
+<text x="1159" y="235" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- finishCycle_ : int</text>
+<text x="1159" y="256" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- handled_     : int</text>
+<text x="1159" y="277" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- busyCycles_  : int</text>
+<line x1="1150" y1="292" x2="1562" y2="292" stroke="#232323" stroke-width="1.2"/>
+<text x="1159" y="316" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ WebServer(id : int)</text>
+<text x="1159" y="337" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ assign(r : Request, cycle : int) : void</text>
+<text x="1159" y="358" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ tick(cycle : int) : bool   // true when done</text>
+<text x="1159" y="379" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ isBusy() : bool</text>
+<text x="1159" y="400" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ id() : int</text>
+<text x="1159" y="421" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ requestsHandled() : int</text>
+<text x="1159" y="442" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ busyCycles() : int</text>
+<rect x="1150" y="490" width="387" height="150" rx="6" ry="6" fill="#ffffff" stroke="#232323" stroke-width="1.6"/>
+<path d="M1150,496 a6,6 0 0 1 6,-6 h375 a6,6 0 0 1 6,6 v42 h-387 z" fill="#500000"/>
+<text x="1343.5" y="507" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" fill="#F5F2EC" opacity=".8">&lt;&lt;free functions&gt;&gt; Random.h</text>
+<text x="1343.5" y="527" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="17" font-weight="600" fill="#F5F2EC">RequestFactory</text>
+<text x="1159" y="562" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">randomIPv4() : string</text>
+<text x="1159" y="583" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">randomTaskTime(min, max : int) : int</text>
+<text x="1159" y="604" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">randomJobType() : char   // 'P' or 'S'</text>
+<text x="1159" y="625" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">makeRequest(cfg : Config&amp;, cycle) : Request</text>
+<rect x="1150" y="700" width="395" height="189" rx="6" ry="6" fill="#ffffff" stroke="#232323" stroke-width="1.6" stroke-dasharray="9 6"/>
+<path d="M1150,706 a6,6 0 0 1 6,-6 h383 a6,6 0 0 1 6,6 v42 h-395 z" fill="#500000"/>
+<text x="1347.5" y="717" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" fill="#F5F2EC" opacity=".8">&lt;&lt;bonus&gt;&gt; routes by jobType</text>
+<text x="1347.5" y="737" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="17" font-weight="600" fill="#F5F2EC">Switch</text>
+<text x="1159" y="772" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">- lbs_ : map&lt;char, LoadBalancer*&gt;</text>
+<line x1="1150" y1="787" x2="1545" y2="787" stroke="#232323" stroke-width="1.2"/>
+<text x="1159" y="811" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ attach(jobType : char, lb : LoadBalancer&amp;)</text>
+<text x="1159" y="832" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ route(r : Request) : bool</text>
+<text x="1159" y="853" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ stepAll() : void</text>
+<text x="1159" y="874" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">+ summaryAll() : void</text>
+<rect x="1150" y="940" width="378" height="171" rx="6" ry="6" fill="#ffffff" stroke="#232323" stroke-width="1.6"/>
+<path d="M1150,946 a6,6 0 0 1 6,-6 h366 a6,6 0 0 1 6,6 v42 h-378 z" fill="#500000"/>
+<text x="1339.0" y="957" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" fill="#F5F2EC" opacity=".8">&lt;&lt;driver&gt;&gt; written by hand (rule A)</text>
+<text x="1339.0" y="977" text-anchor="middle" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="17" font-weight="600" fill="#F5F2EC">main.cpp</text>
+<text x="1159" y="1012" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">read config.txt -&gt; prompt servers, cycles</text>
+<text x="1159" y="1033" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">build Logger, IPBlocker, Config</text>
+<text x="1159" y="1054" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">build LoadBalancer (bonus: Switch + 2 LBs)</text>
+<text x="1159" y="1075" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">seedQueue(servers * 100); START summary</text>
+<text x="1159" y="1096" font-family="Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="14" fill="#232323">loop: stepCycle() x cycles; END summary</text>
+<rect x="560" y="1052" width="520" height="96" rx="6" fill="#fff" stroke="#8A929B" stroke-width="1"/>
+<text x="572" y="1072" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#500000">Legend</text>
+<polyline points="572,1094 630,1094" fill="none" stroke="#232323" stroke-width="1.8" marker-start="url(#diamondFilled)"/>
+<text x="640" y="1098" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#232323">composition (owns, same lifetime)</text>
+<polyline points="572,1118 630,1118" fill="none" stroke="#232323" stroke-width="1.8" marker-start="url(#diamondOpen)"/>
+<text x="640" y="1122" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#232323">aggregation (contains copies)</text>
+<polyline points="850,1094 908,1094" fill="none" stroke="#232323" stroke-width="1.8" marker-end="url(#arrowOpen)"/>
+<text x="918" y="1098" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#232323">reference / association</text>
+<polyline points="850,1118 908,1118" fill="none" stroke="#232323" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrowOpen)"/>
+<text x="918" y="1122" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="normal" fill="#232323">dependency (uses / creates)</text>
+<text x="572" y="1140" text-anchor="start" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="normal" fill="#8A929B">dashed box = bonus component   |   '+' public  '-' private   |   name : type</text>
+<text x="1600" y="1158" text-anchor="end" font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="normal" fill="#8A929B">AggieForge Traffic Cloud  -  Daniel Tang  -  CSCE 412 Cloud Computing, Texas A&amp;M University  -  Oct 2026</text>
+</svg>

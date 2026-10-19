@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 240" width="1180" height="240">
+  <!-- AggieForge Traffic Cloud - lockup for maroon backgrounds -->
+  <rect width="1180" height="240" fill="none"/>
+  <g>
+    <path d="M62,182 h118 a34,34 0 0 0 10,-66 a46,46 0 0 0 -88,-14 a36,36 0 0 0 -40,80 z"
+          fill="#F5F2EC" stroke="#F5F2EC" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M64,124 q0,-8 13,-10 l22,-2 h74 v22 h-20 l-9,11 v9 l16,10 v8 h-56 v-8 l16,-10 v-9 l-9,-11 h-19 l-12,-2 q-13,-2 -13,-8 z"
+          fill="#500000"/>
+    <path d="M196,42 l6,14 14,6 -14,6 -6,14 -6,-14 -14,-6 14,-6 z" fill="#E0731D"/>
+  </g>
+  <text x="258" y="128" font-family="Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="76" font-weight="600" fill="#F5F2EC">Aggie<tspan fill="#E0731D">Forge</tspan></text>
+  <text x="262" y="180" font-family="Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="34" font-weight="600" letter-spacing="14" fill="#F5F2EC" opacity=".85">TRAFFIC CLOUD</text>
+</svg>
