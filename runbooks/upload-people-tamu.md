@@ -1,51 +1,72 @@
 # Runbook — publish the design folder on people.tamu.edu (due Sun Oct 18, 2026, 11:59 pm)
 
-What goes up: the whole `design/` folder (8 files, ~1.1 MB):
+people.tamu.edu is NOT an SFTP host. Your web space is the Open Access Labs "U: drive"
+(a network share). Anything placed in it is served at https://people.tamu.edu/~<netid>/.
+Sources: TAMU KB articles 1145 (Setting Up a TAMU Personal Web Site), 681 (U: drive), 1146 (Creating a Web Page).
+
+What goes up: the whole `design/` folder (8 files, ~820 KB):
 
     index.html  style.css  logo.svg  favicon.svg  uml.svg  uml.png  flow.svg  flow.png
 
-Target folder in your web space (create it):   `public_html/csce412/project4/design/`
-Resulting URL to submit:                        `https://people.tamu.edu/~<netid>/csce412/project4/design/`
+Target folder on the U: drive:   `csce412/project4/design/`
+URL to submit on Canvas:         `https://people.tamu.edu/~<netid>/csce412/project4/design/`
 (the Doxygen site for Part 2 goes beside it in `csce412/project4/docs/`)
 
-## Option A — web file manager (no extra tools)
+## Step 1 — be on the TAMU network
 
-1. Go to https://people.tamu.edu/ -> "Manage your site" (CAS login + Duo).
-2. In the file manager open `public_html`, create folder `csce412`, inside it `project4`, inside it `design`.
-3. Upload all 8 files from `design/` into that folder (multi-select; keep the exact file names — the
-   server is case-sensitive and `index.html` must be lower case so the folder URL renders the page).
-4. If the manager shows permissions: folders 755, files 644.
+On campus: TAMU_WiFi. Off campus: connect the TAMU VPN (connect.tamu.edu / Cisco Secure Client) first.
+The share is not reachable from the open internet.
 
-## Option B — SFTP from the Mac
+## Step 2 — enable your web space (one time)
 
-    cd "/Users/danielus/Fall 2026/CSCE 412/projects/project_4/csce412-project4"
-    sftp <netid>@people.tamu.edu            # NetID password (+ Duo if prompted)
-    sftp> cd public_html
-    sftp> mkdir csce412
-    sftp> mkdir csce412/project4
-    sftp> mkdir csce412/project4/design
-    sftp> cd csce412/project4/design
-    sftp> put design/*
-    sftp> chmod 644 *
-    sftp> bye
+1. Go to https://oalinfo.tamu.edu -> Manage OAL Account -> log in with NetID.
+2. Click "Set up my web page" -> Enable. Wait a couple of minutes for "Enable Web Success".
+3. https://people.tamu.edu/~<netid>/ should now show a placeholder page.
 
-(If `sftp` is refused, use Option A; the file-manager route always works.)
+## Step 3 — mount the U: drive on the Mac
 
-## Verify (do this logged out)
+Finder -> Go -> Connect to Server (Cmd+K) -> enter:
 
-1. Open a private/incognito window and load
-   `https://people.tamu.edu/~<netid>/csce412/project4/design/`
-2. Check: maroon header with the AggieForge logo, both diagrams visible, tables styled.
-   A missing stylesheet (plain black text) or a broken image means a file name/case mismatch.
-3. Click "Open full size (SVG)" under each figure — the SVGs must open in their own tab.
+    smb://storage.it.tamu.edu/tamu/oal/web/~<netid>
 
-## Submit
+Connect as Registered User: name `AUTH\<netid>`, your NetID password.
+(Windows equivalent: map drive U: to `\\storage.it.tamu.edu\tamu\oal\web\~<netid>`, user `AUTH\<netid>`.)
+The share opens in Finder as your web root (it already contains the placeholder index.html; leave it).
+
+## Step 4 — copy the folder
+
+Either drag `design/` into the share and create the parents, or from Terminal (share mounts under /Volumes):
+
+    ls /Volumes/                      # find the mounted share name, e.g. "~<netid>"
+    DEST="/Volumes/~<netid>/csce412/project4/design"
+    mkdir -p "$DEST"
+    cp "/Users/danielus/Fall 2026/CSCE 412/projects/project_4/csce412-project4/design/"* "$DEST/"
+    ls -la "$DEST"                    # expect the 8 files
+
+File names must match exactly (the server is case-sensitive); `index.html` lower case makes the folder URL render.
+
+## Step 5 — verify logged out
+
+1. Private/incognito window -> https://people.tamu.edu/~<netid>/csce412/project4/design/
+2. Check: maroon AggieForge header, both diagrams, styled tables. Plain black text = style.css missing;
+   broken image = file name/case mismatch.
+3. Click "Open full size (SVG)" under each figure.
+4. If the page 403s, re-check Step 2 (web space enabled) and wait a couple of minutes.
+
+## Step 6 — submit
 
 Canvas -> CSCE 412 -> Assignments -> "Project 4 - Pre Deliverable" -> Website URL -> paste the folder URL
 (https://canvas.tamu.edu/courses/473182/assignments/3244828).
+
+## Fallbacks if the share will not mount
+
+- Use a campus Open Access Lab machine or the Virtual Open Access Lab (voal.tamu.edu): the U: drive is
+  pre-mapped there; copy the folder from Google Drive / a USB stick / email.
+- Engineering students also have people.engr.tamu.edu (SFTP to people-edit.engr.tamu.edu); the assignment
+  asks for people.tamu.edu, so use that unless the instructor allows the engineering host.
 
 ## Re-publishing after an edit
 
 Edit `design/index.html` (or rerun `python3 tools/make-diagrams.py design` and
 `tools/render-png.sh design/uml.svg design/uml.png 1620 1170` / `... flow.svg flow.png 1500 2334`
-if the diagrams change), then re-upload only the changed files to the same folder. Commit in git.
+if the diagrams change), then copy only the changed files to the same folder on the share. Commit in git.
