@@ -1,0 +1,22 @@
+# config.txt - AggieForge Traffic Cloud (CSCE 412 Project 4)
+# Every tunable lives here so experiments never need a recompile.
+# key = value ; anything after # is a comment.
+
+servers             = 20       # initial web servers (the program also asks interactively)
+cycles              = 100000   # run length in clock cycles (also asked interactively)
+initial_multiplier  = 100      # starting queue = servers * initial_multiplier
+task_time_min       = 3        # task-time range, cycles (appears in the log summary)
+task_time_max       = 80
+arrival_probability = 0.6      # expected new requests per cycle (>1 = more than one per cycle)
+cooldown_n          = 50       # rest period n after adding/removing a server
+scale_low           = 50       # queue < scale_low * servers  -> remove one server
+scale_high          = 80       # queue > scale_high * servers -> add one server
+min_servers         = 1
+max_servers         = 200
+blocked_ranges      = 10.0.0.0/8, 192.168.100.0/24   # firewall / DOS prevention
+mode                = quiet    # quiet | verbose
+color               = true     # ANSI colours on the console (never in the log file)
+log_file            = lb_log.txt
+status_every        = 1000     # verbose: STATUS heartbeat every N cycles
+seed                = 412      # RNG seed; 0 = random each run
+switch_enabled      = false    # bonus: route 'S' and 'P' jobs to separate load balancers
