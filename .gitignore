@@ -5,3 +5,6 @@ lb_log.txt
 docs/html/
 # OS
 .DS_Store
+
+# packaging
+dist/

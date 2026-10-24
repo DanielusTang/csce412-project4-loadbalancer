@@ -1,0 +1,31 @@
+==========================================================
+  AggieForge Traffic Cloud - Load Balancer Simulation
+  Everything you need to stay balanced - every request, the right server.
+  CSCE 412 Project 4 | run started 2026-10-24 13:55:49 | mode: quiet
+==========================================================
+
+=== AggieForge Traffic Cloud - AGF-LB START ===
+Config file           : config.txt
+Servers (initial)     : 20
+Run length            : 100000 cycles
+Starting queue size   : 2000
+Task time range       : 3 - 80 cycles
+Arrival probability   : 0.90 / cycle
+Scale thresholds      : 50 - 80 per server, cooldown n = 50
+Server bounds         : 1 - 200
+Blocked IP ranges     : 10.0.0.0/8, 192.168.100.0/24
+RNG seed              : 412
+
+=== AggieForge Traffic Cloud - AGF-LB END (after 100000 cycles) ===
+Ending queue size     : 1455
+Requests generated    : 92093   (P: 46216, S: 45877)
+Requests processed    : 90273
+Requests rejected     : 327   (firewall)
+Requests in service   : 38   (busy servers at end)
+Active servers (end)  : 38   (busy 38, idle 0)
+Inactive (removed)    : 0   of 38 servers ever created
+Scale-ups / downs     : 18 / 0
+Min / max servers     : 20 / 38
+Min / max queue       : 1455 / 2961
+Avg wait in queue     : 2586.7 cycles
+Server utilization    : 100.0 %

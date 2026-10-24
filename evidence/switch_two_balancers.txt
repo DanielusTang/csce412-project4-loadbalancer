@@ -1,0 +1,61 @@
+==========================================================
+  AggieForge Traffic Cloud - Load Balancer Simulation
+  Everything you need to stay balanced - every request, the right server.
+  CSCE 412 Project 4 | run started 2026-10-24 13:55:50 | mode: quiet
+==========================================================
+
+=== AggieForge Traffic Cloud - SWITCH enabled: 'P' -> AGF-LB-P (10 servers), 'S' -> AGF-LB-S (10 servers) ===
+
+=== AggieForge Traffic Cloud - AGF-LB-P START ===
+Config file           : config.txt
+Servers (initial)     : 10
+Run length            : 100000 cycles
+Starting queue size   : 1000
+Task time range       : 3 - 80 cycles
+Arrival probability   : 0.60 / cycle
+Scale thresholds      : 50 - 80 per server, cooldown n = 50
+Server bounds         : 1 - 200
+Blocked IP ranges     : 10.0.0.0/8, 192.168.100.0/24
+RNG seed              : 412
+
+=== AggieForge Traffic Cloud - AGF-LB-S START ===
+Config file           : config.txt
+Servers (initial)     : 10
+Run length            : 100000 cycles
+Starting queue size   : 1000
+Task time range       : 3 - 80 cycles
+Arrival probability   : 0.60 / cycle
+Scale thresholds      : 50 - 80 per server, cooldown n = 50
+Server bounds         : 1 - 200
+Blocked IP ranges     : 10.0.0.0/8, 192.168.100.0/24
+RNG seed              : 412
+
+=== AggieForge Traffic Cloud - AGF-LB-P END (after 100000 cycles) ===
+Ending queue size     : 442
+Requests generated    : 31142   (P: 31142, S: 0)
+Requests processed    : 30564
+Requests rejected     : 124   (firewall)
+Requests in service   : 12   (busy servers at end)
+Active servers (end)  : 12   (busy 12, idle 0)
+Inactive (removed)    : 1   of 13 servers ever created
+Scale-ups / downs     : 3 / 1
+Min / max servers     : 10 / 13
+Min / max queue       : 0 / 1035
+Avg wait in queue     : 1422.3 cycles
+Server utilization    : 100.0 %
+
+=== AggieForge Traffic Cloud - AGF-LB-S END (after 100000 cycles) ===
+Ending queue size     : 358
+Requests generated    : 30676   (P: 0, S: 30676)
+Requests processed    : 30189
+Requests rejected     : 117   (firewall)
+Requests in service   : 12   (busy servers at end)
+Active servers (end)  : 12   (busy 12, idle 0)
+Inactive (removed)    : 1   of 13 servers ever created
+Scale-ups / downs     : 3 / 1
+Min / max servers     : 10 / 13
+Min / max queue       : 0 / 992
+Avg wait in queue     : 1209.8 cycles
+Server utilization    : 100.0 %
+
+=== SWITCH routing totals: P -> AGF-LB-P 30142, S -> AGF-LB-S 29676 ===
