@@ -12,6 +12,8 @@
  * value), builds the Logger, IPBlocker and LoadBalancer, seeds the starting
  * queue with servers * initial_multiplier requests, runs the clock and
  * prints the START and END summaries to the console and the log file.
+ * With @c switch_enabled = true (bonus) it builds a Switch with one
+ * LoadBalancer for processing jobs and one for streaming jobs instead.
  */
 #include <cstdlib>
 #include <iostream>
@@ -24,6 +26,7 @@
 #include "LoadBalancer.h"
 #include "Logger.h"
 #include "Random.h"
+#include "Switch.h"
 
 namespace {
 
@@ -116,13 +119,48 @@ int main(int argc, char* argv[]) {
         if (!blocker.addRange(r)) std::cerr << "warning: ignoring bad blocked range '" << r << "'\n";
     }
 
-    LoadBalancer lb(cfg, blocker, log, "AGF-LB");
-    lb.seedQueue(servers * cfg.getInt("initial_multiplier", 100));
+    const int multiplier = cfg.getInt("initial_multiplier", 100);
 
-    // --- run ---------------------------------------------------------------
-    lb.printSummary();          // START block
-    lb.run(cycles);
-    lb.printSummary();          // END block
+    if (cfg.getBool("switch_enabled", false)) {
+        // --- bonus: Switch + one balancer per job type -----------------------
+        const int serversP = (servers + 1) / 2;
+        const int serversS = servers - serversP > 0 ? servers - serversP : 1;
+        LoadBalancer lbP(cfg, blocker, log, "AGF-LB-P", serversP);
+        LoadBalancer lbS(cfg, blocker, log, "AGF-LB-S", serversS);
+        lbP.setExternalArrivals(true);
+        lbS.setExternalArrivals(true);
+        lbP.seedQueue(serversP * multiplier, 'P');
+        lbS.seedQueue(serversS * multiplier, 'S');
+
+        Switch sw;
+        sw.attach('P', lbP);
+        sw.attach('S', lbS);
+
+        log.summary("");
+        log.summary("=== AggieForge Traffic Cloud - SWITCH enabled: 'P' -> AGF-LB-P (" +
+                    std::to_string(serversP) + " servers), 'S' -> AGF-LB-S (" + std::to_string(serversS) +
+                    " servers) ===");
+        sw.summaryAll();                                       // START blocks
+        const double rate = cfg.getDouble("arrival_probability", 0.6);
+        for (int cycle = 0; cycle < cycles; ++cycle) {
+            for (int n = randomArrivals(rate); n > 0; --n) {
+                sw.route(makeRequest(cfg, cycle));             // firewall check inside addRequest
+            }
+            sw.stepAll();
+        }
+        sw.summaryAll();                                       // END blocks
+        log.summary("");
+        log.summary("=== SWITCH routing totals: P -> AGF-LB-P " + std::to_string(sw.routed('P')) +
+                    ", S -> AGF-LB-S " + std::to_string(sw.routed('S')) + " ===");
+    } else {
+        // --- single load balancer ---------------------------------------------
+        LoadBalancer lb(cfg, blocker, log, "AGF-LB");
+        lb.seedQueue(servers * multiplier);
+
+        lb.printSummary();          // START block
+        lb.run(cycles);
+        lb.printSummary();          // END block
+    }
 
     if (!log.path().empty()) {
         std::cout << "\nLog written to " << log.path() << "\n";

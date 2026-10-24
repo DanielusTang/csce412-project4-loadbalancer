@@ -60,15 +60,18 @@ public:
      * @param blocker Shared IP-range firewall.
      * @param log     Shared logger.
      * @param name    Display name used in log lines (e.g. "AGF-LB-P").
+     * @param initialServers Pool size; -1 means use @c cfg.servers (the Switch
+     *                splits the user's server count between its two pools).
      */
     LoadBalancer(const Config& cfg, IPBlocker& blocker, Logger& log,
-                 std::string name = "AGF-LB");
+                 std::string name = "AGF-LB", int initialServers = -1);
 
     /**
      * @brief Fill the starting queue with random requests (arrivedCycle = 0).
-     * @param count Number of requests, normally servers * 100.
+     * @param count   Number of requests, normally servers * 100.
+     * @param jobType 0 for a random mix, or 'P' / 'S' to seed a single-type pool.
      */
-    void seedQueue(int count);
+    void seedQueue(int count, char jobType = 0);
 
     /**
      * @brief Admit a request through the firewall.

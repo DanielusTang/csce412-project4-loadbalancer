@@ -23,9 +23,10 @@ std::string fixed(double v, int places) {
 }
 }  // namespace
 
-LoadBalancer::LoadBalancer(const Config& cfg, IPBlocker& blocker, Logger& log, std::string name)
+LoadBalancer::LoadBalancer(const Config& cfg, IPBlocker& blocker, Logger& log, std::string name,
+                           int initialServers)
     : cfg_(cfg), blocker_(blocker), log_(log), name_(std::move(name)) {
-    initialServers_ = std::max(1, cfg_.getInt("servers", 20));
+    initialServers_ = std::max(1, initialServers > 0 ? initialServers : cfg_.getInt("servers", 20));
     taskMin_        = cfg_.getInt("task_time_min", 3);
     taskMax_        = cfg_.getInt("task_time_max", 80);
     arrivalRate_    = cfg_.getDouble("arrival_probability", 0.6);
@@ -41,9 +42,10 @@ LoadBalancer::LoadBalancer(const Config& cfg, IPBlocker& blocker, Logger& log, s
     }
 }
 
-void LoadBalancer::seedQueue(int count) {
+void LoadBalancer::seedQueue(int count, char jobType) {
     for (int i = 0; i < count; ++i) {
         Request r = makeRequest(cfg_, 0);
+        if (jobType != 0) r.jobType = jobType;
         ++stats_.generated;
         (r.jobType == 'P' ? stats_.generatedP : stats_.generatedS)++;
         queue_.push(r);
