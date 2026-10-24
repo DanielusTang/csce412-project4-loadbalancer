@@ -1,0 +1,33 @@
+/* AggieForge brand overrides for the Doxygen site (loaded after doxygen.css). */
+html {
+  --title-background-color: #500000;      /* Forge Maroon */
+  --title-foreground-color: #F5F2EC;      /* Parchment */
+  --title-separator-color: #E0731D;       /* Ember */
+  --nav-gradient-image: none;
+  --nav-background-color: #F5F2EC;
+  --header-background-color: #F5F2EC;
+  --header-separator-color: #E0731D;
+  --fragment-background: #232323;         /* Charcoal terminals */
+  --fragment-foreground: #F5F2EC;
+}
+#titlearea { background: #500000; border-bottom: 3px solid #E0731D; }
+#titlearea #projectname, #titlearea #projectnumber, #titlearea #projectbrief { color: #F5F2EC; }
+#projectlogo img { height: 44px; margin: 4px 10px; }
+#projectalign { vertical-align: middle; }
+div.header { border-bottom: 2px solid #E0731D; }
+a, .contents a:visited { color: #7A1F1F; }
+.sm-dox { background: #F5F2EC; border-bottom: 1px solid #8A929B; }
+.sm-dox a, .sm-dox a:focus, .sm-dox a:hover, .sm-dox a:active { color: #232323 !important; text-shadow: none !important; background-image: none !important; }
+#nav-tree, #side-nav { background: #F5F2EC; }
+#nav-tree .selected { background: #500000; }
+#nav-tree .selected a, #nav-tree .selected .label { color: #F5F2EC; }
+div.fragment, pre.fragment { background: #232323; color: #F5F2EC; border: 1px solid #8A929B; }
+div.fragment span.lineno { color: #8A929B; }
+div.fragment .keyword { color: #E0731D; }
+div.fragment .comment { color: #8A929B; }
+div.fragment .stringliteral, div.fragment .charliteral { color: #9CCC65; }
+table.markdownTable th { background: #500000; color: #F5F2EC; }
+hr.footer { border-top: 1px solid #8A929B; }
+img.footer { display: none; }
+address.footer { color: #8A929B; }
+address.footer::before { content: "AggieForge Traffic Cloud - Daniel Tang - CSCE 412 Cloud Computing, Texas A&M University. "; }

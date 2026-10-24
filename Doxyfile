@@ -1,0 +1,50 @@
+# Doxyfile - AggieForge Traffic Cloud (CSCE 412 Project 4)
+# Only the settings that differ from Doxygen's defaults are listed.
+# Build the site with `make docs`; output lands in docs/html/.
+
+PROJECT_NAME           = "AggieForge Traffic Cloud"
+PROJECT_NUMBER         = "CSCE 412 Project 4"
+PROJECT_BRIEF          = "Load balancer simulation - every request, the right server."
+PROJECT_LOGO           = branding/logo-icon.svg
+OUTPUT_DIRECTORY       = docs
+CREATE_SUBDIRS         = NO
+
+INPUT                  = . README.md
+FILE_PATTERNS          = *.cpp *.h *.md
+RECURSIVE              = NO
+EXCLUDE                = docs design branding tools runbooks evidence
+USE_MDFILE_AS_MAINPAGE = README.md
+IMAGE_PATH             = branding evidence
+
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+JAVADOC_AUTOBRIEF      = YES
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = YES
+SHOW_INCLUDE_FILES     = YES
+WARN_IF_UNDOCUMENTED   = YES
+QUIET                  = YES
+
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+HTML_COLORSTYLE        = LIGHT
+HTML_COLORSTYLE_HUE    = 0
+HTML_COLORSTYLE_SAT    = 100
+HTML_COLORSTYLE_GAMMA  = 60
+HTML_EXTRA_STYLESHEET  = branding/doxygen-agf.css
+HTML_DYNAMIC_SECTIONS  = YES
+GENERATE_TREEVIEW      = YES
+DISABLE_INDEX          = NO
+FULL_SIDEBAR           = NO
+SEARCHENGINE           = YES
+
+GENERATE_LATEX         = NO
+GENERATE_MAN           = NO
+GENERATE_XML           = NO
+
+HAVE_DOT               = NO
+CLASS_GRAPH            = YES
+COLLABORATION_GRAPH    = YES

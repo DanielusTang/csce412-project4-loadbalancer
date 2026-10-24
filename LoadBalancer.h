@@ -90,7 +90,7 @@ public:
     void run(int cycles);
 
     /**
-     * @brief Switch off internal random arrivals.
+     * @brief Disable internal random arrivals.
      *
      * Used by the bonus Switch, which generates arrivals itself and routes
      * them by job type so each pool sees the right mix.
