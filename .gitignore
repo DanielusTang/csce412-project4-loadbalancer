@@ -8,3 +8,6 @@ docs/html/
 
 # packaging
 dist/
+
+# demo recording (346 MB, over GitHub's 100 MB file limit; submitted via Canvas)
+video/
