@@ -30,6 +30,13 @@ Upload at https://canvas.tamu.edu/courses/473182/assignments/3244823
 
 ## 3. Code documentation - Doxygen on people.tamu.edu (100 pts) - needs you
 
+**DONE Oct 24, 2026 3:02 PM** via VOAL: Horizon sidebar -> Transfer Files -> `dist/docs.zip` (lands in H:\),
+then the Expand-Archive command below typed by Daniel in PowerShell on the virtual desktop (Horizon reports
+108 files in `U:\csce412\project4\docs`). Verified unauthenticated: all 108 top-level files plus the 96
+files in `search/` return HTTP 200; main page shows the maroon header/logo; LoadBalancer page is
+`class_load_balancer.html`. Pasting into the Horizon canvas does not work from Chrome automation
+(synthetic Ctrl+V types a bare 'v', and dispatched paste events do not reach the VM clipboard).
+
 `dist/docs.zip` holds `docs/html/` renamed to `docs/`. Same VOAL route as the design page
 (`runbooks/upload-people-tamu.md`, "DONE" note at the top):
 
